@@ -99,9 +99,10 @@ class Game extends React.Component {
       const desc = index ?
         `Go to move #${index} (${low}, ${column})` :
         "Go to game start";
+      const className = index === this.state.stepNumber ? "current_selected" : "not_selected";
       return (
         <li>
-          <button key={index} onClick={() => this.jumpTo(index)}>{desc}</button>
+          <button className={className} key={index} onClick={() => this.jumpTo(index)}>{desc}</button>
         </li>
       )
 
