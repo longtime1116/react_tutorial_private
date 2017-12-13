@@ -94,6 +94,7 @@ class Game extends React.Component {
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
+    // ここで history を逆順だけ逆順にしても、index がそのままなのでダメ
     const moves = history.map((element, index) => {
       const low = Math.floor(element.latest_hand / 3) + 1;
       const column = element.latest_hand % 3 + 1;
