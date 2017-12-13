@@ -88,6 +88,10 @@ class Game extends React.Component {
     })
   }
 
+  isCurrent(step) {
+    return step === this.state.stepNumber
+  }
+
   render() {
     const history = this.state.history
     const current = history[this.state.stepNumber];
@@ -99,10 +103,10 @@ class Game extends React.Component {
       const desc = index ?
         `Go to move #${index} (${low}, ${column})` :
         "Go to game start";
-      const className = index === this.state.stepNumber ? "current_selected" : "not_selected";
+      const style = this.isCurrent(index) ? { fontWeight: 'bold' } : {}
       return (
         <li>
-          <button className={className} key={index} onClick={() => this.jumpTo(index)}>{desc}</button>
+          <button style={style} key={index} onClick={() => this.jumpTo(index)}>{desc}</button>
         </li>
       )
 
