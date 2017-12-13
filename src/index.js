@@ -125,7 +125,7 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{moves}</ol>
+          <ol>{this.state.isAscending ? moves : moves.reverse()}</ol>
           <button onClick={() => this.setState({isAscending: !this.state.isAscending})}>Change the order</button>
         </div>
       </div>
