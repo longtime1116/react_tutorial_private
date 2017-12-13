@@ -31,17 +31,15 @@ class Board extends React.Component {
     return (
       <div>
         {
-          [0,1,2].map((i) => {
-            return (
-              <div className="board-row">
-                {
-                  [0,1,2].map((j) => {
-                    return  this.renderSquare(i * 3 + j);
-                  })
-                }
-              </div>
-            );
-          })
+          [0,1,2].map((i) =>
+            <div className="board-row" key={i}>
+              {
+                [0,1,2].map((j) =>
+                  this.renderSquare(i * 3 + j)
+                )
+              }
+            </div>
+          )
         }
       </div>
     );
