@@ -56,6 +56,7 @@ class Game extends React.Component {
       }],
       stepNumber: 0,
       xIsNext: true,
+      isAscending: true,
     }
   }
 
@@ -125,6 +126,7 @@ class Game extends React.Component {
         <div className="game-info">
           <div>{status}</div>
           <ol>{moves}</ol>
+          <button onClick={() => this.setState({isAscending: !this.state.isAscending})}>Change the order</button>
         </div>
       </div>
     );
