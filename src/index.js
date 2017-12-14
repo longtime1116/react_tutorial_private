@@ -57,6 +57,7 @@ class Game extends React.Component {
       stepNumber: 0,
       xIsNext: true,
       isAscending: true,
+      winFactor: [],
     }
   }
 
@@ -64,7 +65,18 @@ class Game extends React.Component {
     const history = this.state.history.slice(0, this.state.stepNumber + 1);
     const current = history[history.length - 1];
     const squares = current.squares.slice();
-    if (calculateWinner(squares) || squares[i]) {
+
+    if (squares[i]) {
+      return;
+    }
+
+    let winner;
+    let winFactor;
+    winner, winFactor = calculateWinner(squares)
+    if (winner) {
+      this.setState({
+        winFactor: winFactor
+      })
       return;
     }
     squares[i] =  this.state.xIsNext ? 'X' : 'O'
@@ -93,6 +105,7 @@ class Game extends React.Component {
     const history = this.state.history
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
+    const winFactor = this.state.winFactor;
 
     // ここで history を逆順だけ逆順にしても、index がそのままなのでダメ
     const moves = history.map((element, index) => {
@@ -116,6 +129,10 @@ class Game extends React.Component {
     else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
+    let causedSquares = "";
+    if (winFactor.length > 0) {
+      causedSquares = winFactor.to_s
+    }
     return (
       <div className="game">
         <div className="game-board">
@@ -125,6 +142,7 @@ class Game extends React.Component {
           />
         </div>
         <div className="game-info">
+          <div>{causedSquares}</div>
           <div>{status}</div>
           <ol>{this.state.isAscending ? moves : moves.reverse()}</ol>
           <button onClick={() => this.setState({isAscending: !this.state.isAscending})}>Change the order</button>
@@ -155,7 +173,7 @@ function calculateWinner(squares) {
   for (let i = 0; i < lines.length; i++) {
     const [a, b, c] = lines[i];
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a];
+      return [squares[a], [a, b, c]];
     }
   }
   return null;
